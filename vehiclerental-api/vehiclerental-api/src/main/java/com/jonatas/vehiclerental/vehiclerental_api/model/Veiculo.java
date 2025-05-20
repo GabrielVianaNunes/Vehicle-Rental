@@ -1,39 +1,28 @@
+// Veiculo.java
 package com.jonatas.vehiclerental.vehiclerental_api.model;
 
-import com.jonatas.vehiclerental.vehiclerental_api.model.enums.TipoVeiculo;
-
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 @Entity
-public class Veiculo {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo")
+public abstract class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String modelo;
-
-    @Enumerated(EnumType.STRING)
-    private TipoVeiculo tipo;
-
     private boolean disponivel = true;
 
-    // Construtores
-    public Veiculo() {
-    }
-
-    public Veiculo(String modelo, TipoVeiculo tipo) {
-        this.modelo = modelo;
-        this.tipo = tipo;
-        this.disponivel = true;
-    }
-
     // Getters e Setters
+
     public Long getId() {
         return id;
     }
@@ -50,14 +39,6 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
-    public TipoVeiculo getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(TipoVeiculo tipo) {
-        this.tipo = tipo;
-    }
-
     public boolean isDisponivel() {
         return disponivel;
     }
@@ -65,4 +46,7 @@ public class Veiculo {
     public void setDisponivel(boolean disponivel) {
         this.disponivel = disponivel;
     }
+
+    // ✅ Adicione isto:
+    public abstract String getDescricaoDetalhada();
 }
