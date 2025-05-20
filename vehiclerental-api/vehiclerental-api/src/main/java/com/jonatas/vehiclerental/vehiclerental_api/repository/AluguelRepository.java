@@ -14,4 +14,6 @@ public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
     List<Aluguel> findByVeiculoAndDataFimAfter(Veiculo veiculo, LocalDate data);
 
     List<Aluguel> findByDataFimAfter(LocalDate hoje);
+
+    List<Aluguel> findByDataFimIsNull();
 }
